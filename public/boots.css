@@ -1,0 +1,22 @@
+.form-signin{
+width:330px;
+margin:0 auto
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+div{
+	border:2px;
+	border-width:2px;
+}
