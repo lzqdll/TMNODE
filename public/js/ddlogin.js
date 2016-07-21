@@ -63,7 +63,7 @@
 					success : function (data, status, xhr) {
 						
 						//var info = JSON.parse(data);
-						window.location.href = 'http://192.168.30.52:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
+						window.location.href = 'http://192.168.31.105:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
 						if (data.errcode === 0) {
 							logger.i('user id: ' + data.userid);
 							dd.userid = data.userid;

@@ -29,17 +29,30 @@ router.post('/login', function (req, res, next) {
 });
 //DD提交的用户免登授权CODE
 router.get('/getuser', function (req, res, next) {
-	var path = '/user/getuserinfo?access_token='+accessToken+'&code=' + req.query.code;
-	httpUtil.get(path, {
-		success : function (data) {
-			console.log('getuse :'+global.accessToken);
-			//res.redirect('/leavebalance?dd_nav_bgcolor=FF5E97F6');
-			req.session.userid=data.userid;
-			console.log(req.session);
-			res.send(data)
+	var Codepath = '/user/getuserinfo?access_token=' + accessToken + '&code=' + req.query.code;
+	httpUtil.get(Codepath, {
+		success : function (user) {
+			console.log(user.userid);
+			if(user!==undefined)
+				getuserinfo(user.userid,res);
 		},
-		error : function (data) {res.send(data)}
+		error : function (data) {
+			res.send(data)
+		}
 	})
 });
+getuserinfo=function(id,res) {
+	var path = '/user/get?access_token=' + accessToken + '&userid=' + id;
+	console.log(path);
+	httpUtil.get(path, {
+		success : function (userinfo) {
+			console.log(userinfo);
+			res.send(userinfo);
+		},
+		error : function (data) {
+			res.send(data)
+		}
 
+	})
+}
 module.exports = router;
