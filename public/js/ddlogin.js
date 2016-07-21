@@ -36,7 +36,7 @@
 	dd.userid = 0;
 	//alert("obj   "+_config);
 	dd.ready(function () {
-		alert('aa reday');
+		//alert('aa reday');
 		logger.i('dd.ready rocks!');
 		dd.runtime.info({
 			onSuccess : function (info) {
@@ -52,19 +52,21 @@
 			onSuccess : function (info) {
 				logger.i('authcode: ' + info.code);
 				$.ajax({
-					url : '/sendMsg.php',
-					type : "POST",
+					url : '/users/getuser',
+					type : "GET",
 					data : {
 						"event" : "get_userinfo",
 						"code" : info.code
 					},
 					dataType : 'json',
-					timeout : 900,
+					timeout : 2900,
 					success : function (data, status, xhr) {
-						var info = JSON.parse(data);
-						if (info.errcode === 0) {
-							logger.i('user id: ' + info.userid);
-							dd.userid = info.userid;
+						
+						//var info = JSON.parse(data);
+						window.location.href = 'http://192.168.30.52:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
+						if (data.errcode === 0) {
+							logger.i('user id: ' + data.userid);
+							dd.userid = data.userid;
 						} else {
 							logger.e('auth error: ' + data);
 						}

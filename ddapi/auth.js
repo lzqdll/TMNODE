@@ -3,7 +3,6 @@ var httpUtil = require('../util/http');
 var env = require('./env');
 
 module.exports = {
-    
     getAccessToken: function(cb) {
       var path = '/gettoken?' + querystring.stringify({
         corpid: env.corpId,
@@ -19,4 +18,5 @@ module.exports = {
       });
       httpUtil.get(path, cb);
     },
+	
 };
