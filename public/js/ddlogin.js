@@ -6,7 +6,7 @@
 	/**
 	 * _config comes from server-side template. see views/index.jade
 	 */
-	_config=JSON.parse(mss);
+	_config = JSON.parse(mss);
 	logger.i(_config.agentId);
 	logger.i(_config.corpId);
 	logger.i(_config.timeStamp);
@@ -32,7 +32,7 @@
 			'biz.telephone.call',
 			'biz.ding.post']
 	});
-	
+
 	dd.userid = 0;
 	//alert("obj   "+_config);
 	dd.ready(function () {
@@ -50,29 +50,20 @@
 		dd.runtime.permission.requestAuthCode({
 			corpId : _config.corpId, //企业id
 			onSuccess : function (info) {
-				logger.i('authcode: ' + info.code);
+				var code=info.code;
+				logger.i('authcode: ' +code);
 				$.ajax({
 					url : '/users/getuser',
-					type : "GET",
-					data : {
-						"event" : "get_userinfo",
-						"code" : info.code
-					},
+					type : "POST",
+					data:{'code' : code},
 					dataType : 'json',
-					timeout : 2900,
-					success : function (data, status, xhr) {
-						
-						//var info = JSON.parse(data);
-						window.location.href = 'http://192.168.31.105:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
-						if (data.errcode === 0) {
-							logger.i('user id: ' + data.userid);
-							dd.userid = data.userid;
-						} else {
-							logger.e('auth error: ' + data);
-						}
+					//timeout : 5000,
+					success : function (data1, status, xhr) {
+						log.i(data1);
+						//window.location.href = 'http://192.168.30.52:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
 					},
 					error : function (xhr, errorType, error) {
-						logger.e(errorType + ', requestauthcode ' + error);
+						logger.e("ajax failed：" + errorType + ', requestauthcode ' + error+','+JSON.stringify(xhr));
 					}
 				});
 			},
