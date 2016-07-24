@@ -5,6 +5,7 @@ var login = require('../node_modules/tm/login.js');
 const util = require('util');
 var httpUtil = require('../util/http');
 var tm = require('../node_modules/tm/tmdataexchange.js');
+var dduser = require('../ddapi/DDuser.js');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -29,45 +30,26 @@ router.post('/login', function (req, res, next) {
 	});
 });
 //DD提交的用户免登授权CODE
-router.post('/getuser', function (req, res, next) {
-	var Codepath = '/user/getuserinfo?access_token=' + accessToken + '&code=' + req.body.code;
-	console.log(req.body.code);
-	httpUtil.get(Codepath, {
-		success : function (user) {
-			console.log(user.userid);
-			if (user !== undefined)
-				getuserinfo(user.userid, res, req);
-		},
-		error : function (data) {
-			res.send(data)
-		}
-	})
-});
-getuserinfo = function (id, res, req) {
-	var path = '/user/get?access_token=' + accessToken + '&userid=' + id;
-	console.log(path);
-	httpUtil.get(path, {
+router.get('/ssoauth', function (req, res, next) {
+	dduser.getuserdetails(accessToken, req.query.code, {
 		success : function (userinfo) {
-			console.log(userinfo);
 			tm.SSOlogin(userinfo.mobile, {
 				success : function (data) {
-					console.log(data);
-					//req.session.user = data.quser;
-					
-					res.send(data)
+					req.session.user = data.quser;
+					res.send({'result':data.success});
 				},
 				error : function (data) {
-					console.log('jajdfjalsdfj');
-					res.send({'error':'jdjjff'});
+					console.log('TM SSO 验证失败');
+					res.send({
+						'result' : false
+					});
 				}
 			});
-			//	res.send(userinfo);
 		},
-		error : function (data) {
-			console.log("GET USER INFO FAILED")
-			res.send(data)
-		}
+		error(data) {'SSOAUTH failed!!!'}
 
 	})
-}
+
+})
+
 module.exports = router;

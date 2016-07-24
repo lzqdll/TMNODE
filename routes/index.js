@@ -11,9 +11,9 @@ router.get('/', function (req, res, next) {
 	var params = {
 		nonceStr : 'abcdefg',
 		timeStamp : new Date().getTime(),
-		url : req.headers.referer
+		url : req.protocol+'://'+req.headers.host+req.originalUrl
 	};
-	//console.log(req.headers.referer);
+	console.log(req.headers.referer);
 	ddsign.getSign(params, {
 		success : function (data) {
 			obj={agentId:30600085,corpId:'ding28029cf6368a0723',timeStamp:params.timeStamp,nonceStr:params.nonceStr,signature:data};

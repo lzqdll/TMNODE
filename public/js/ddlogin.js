@@ -1,6 +1,6 @@
 ;
 (function () {
-	logger.i('Here we go...');
+	logger.i('Here we go...  ∑¥∂‘∑®');
 
 	logger.i(location.href);
 	/**
@@ -48,22 +48,25 @@
 		});
 
 		dd.runtime.permission.requestAuthCode({
-			corpId : _config.corpId, //‰ºÅ‰∏öid
+			corpId : _config.corpId, //∆Û“µid
 			onSuccess : function (info) {
 				var code=info.code;
 				logger.i('authcode: ' +code);
 				$.ajax({
-					url : '/users/getuser',
-					type : "POST",
+					url : '/users/ssoauth',
+					type : "GET",
 					data:{'code' : code},
 					dataType : 'json',
 					//timeout : 5000,
-					success : function (data1, status, xhr) {
-						log.i(data1);
-						//window.location.href = 'http://192.168.30.52:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
+					success : function (data, status, xhr) {
+						logger.i(JSON.stringify(data));
+						if(data.result)
+						{window.location.href = 'http://192.168.31.105:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';}
+					else
+						logger.i('…Ì∑›—È÷§ ß∞‹');
 					},
 					error : function (xhr, errorType, error) {
-						logger.e("ajax failedÔºö" + errorType + ', requestauthcode ' + error+','+JSON.stringify(xhr));
+						logger.e("ajax failed£∫" + errorType + ', requestauthcode ' + error+','+JSON.stringify(xhr));
 					}
 				});
 			},
@@ -75,16 +78,16 @@
 		$('.chooseonebtn').on('click', function () {
 
 			dd.biz.chat.pickConversation({
-				corpId : _config.corpId, //‰ºÅ‰∏öid
-				isConfirm : 'false', //ÊòØÂê¶ÂºπÂá∫Á°ÆËÆ§Á™óÂè£ÔºåÈªòËÆ§‰∏∫true
+				corpId : _config.corpId, //∆Û“µid
+				isConfirm : 'false', // «∑ÒµØ≥ˆ»∑»œ¥∞ø⁄£¨ƒ¨»œŒ™true
 				onSuccess : function (data) {
 					var chatinfo = data;
 					if (chatinfo) {
 						console.log(chatinfo.cid);
 						dd.device.notification.prompt({
-							message : "ÂèëÈÄÅÊ∂àÊÅØ",
+							message : "∑¢ÀÕœ˚œ¢",
 							title : chatinfo.title,
-							buttonLabels : ['ÂèëÈÄÅ', 'ÂèñÊ∂à'],
+							buttonLabels : ['∑¢ÀÕ', '»°œ˚'],
 							onSuccess : function (result) {
 								var text = result.value;
 								if (text == '') {
@@ -106,9 +109,9 @@
 										var info = data;
 										logger.i('sendMsg: ' + JSON.stringify(data));
 										if (info.errcode == 0) {
-											logger.i('sendMsg: ÂèëÈÄÅÊàêÂäü');
+											logger.i('sendMsg: ∑¢ÀÕ≥…π¶');
 											/**
-											 * Ë∑≥ËΩ¨Âà∞ÂØπËØùÁïåÈù¢
+											 * Ã¯◊™µΩ∂‘ª∞ΩÁ√Ê
 											 */
 											dd.biz.chat.open({
 												cid : chatinfo.cid,
@@ -116,7 +119,7 @@
 												onFail : function (err) {}
 											});
 										} else {
-											logger.e('sendMsg: ÂèëÈÄÅÂ§±Ë¥•' + info.errmsg);
+											logger.e('sendMsg: ∑¢ÀÕ ß∞‹' + info.errmsg);
 										}
 									},
 									error : function (xhr, errorType, error) {
@@ -134,18 +137,18 @@
 
 		$('.phonecall').on('click', function () {
 			dd.biz.contact.choose({
-				startWithDepartmentId : 0, //-1Ë°®Á§∫ÊâìÂºÄÁöÑÈÄöËÆØÂΩï‰ªéËá™Â∑±ÊâÄÂú®ÈÉ®Èó®ÂºÄÂßãÂ±ïÁ§∫, 0Ë°®Á§∫‰ªé‰ºÅ‰∏öÊúÄ‰∏äÂ±ÇÂºÄÂßãÔºå(ÂÖ∂‰ªñÊï∞Â≠óË°®Á§∫‰ªéËØ•ÈÉ®Èó®ÂºÄÂßã:ÊöÇÊó∂‰∏çÊîØÊåÅ)
-				multiple : false, //ÊòØÂê¶Â§öÈÄâÔºö trueÂ§öÈÄâ falseÂçïÈÄâÔºõ ÈªòËÆ§true
-				users : [], //ÈªòËÆ§ÈÄâ‰∏≠ÁöÑÁî®Êà∑ÂàóË°®ÔºåuseridÔºõÊàêÂäüÂõûË∞É‰∏≠Â∫îÂåÖÂê´ËØ•‰ø°ÊÅØ
-				corpId : _config.corpId, //‰ºÅ‰∏öid
-				max : 10, //‰∫∫Êï∞ÈôêÂà∂ÔºåÂΩìmultiple‰∏∫trueÊâçÁîüÊïàÔºåÂèØÈÄâËåÉÂõ¥1-1500
+				startWithDepartmentId : 0, //-1±Ì æ¥Úø™µƒÕ®—∂¬º¥”◊‘º∫À˘‘⁄≤ø√≈ø™ º’π æ, 0±Ì æ¥”∆Û“µ◊Ó…œ≤„ø™ º£¨(∆‰À˚ ˝◊÷±Ì æ¥”∏√≤ø√≈ø™ º:‘› ±≤ª÷ß≥÷)
+				multiple : false, // «∑Ò∂‡—°£∫ true∂‡—° falseµ•—°£ª ƒ¨»œtrue
+				users : [], //ƒ¨»œ—°÷–µƒ”√ªß¡–±Ì£¨userid£ª≥…π¶ªÿµ˜÷–”¶∞¸∫¨∏√–≈œ¢
+				corpId : _config.corpId, //∆Û“µid
+				max : 10, //»À ˝œﬁ÷∆£¨µ±multipleŒ™true≤≈…˙–ß£¨ø…—°∑∂Œß1-1500
 				onSuccess : function (data) {
 					if (data && data.length > 0) {
 						var selectUserId = data[0].emplId;
 						if (selectUserId > 0) {
 							dd.biz.telephone.call({
-								users : [selectUserId], //Áî®Êà∑ÂàóË°®ÔºåÂ∑•Âè∑
-								corpId : _config.corpId, //‰ºÅ‰∏öid
+								users : [selectUserId], //”√ªß¡–±Ì£¨π§∫≈
+								corpId : _config.corpId, //∆Û“µid
 								onSuccess : function (info) {
 									logger.i('biz.telephone.call: info' + JSON.stringify(info));
 

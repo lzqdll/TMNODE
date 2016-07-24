@@ -20,6 +20,7 @@
 		getTargetUrl : function (replaceUrl, targetUrl) {
 			var protocol = location.protocol;
 			var host = location.host;
+			alert(location.pathname);
 			var pathname = location.pathname.replace(replaceUrl, targetUrl);
 			alert(pathname);
 			return protocol + '//' + host + pathname;
@@ -107,7 +108,7 @@
 			if (page == 'add') {
 				//这里替换为对应的页面url
 				dd.biz.util.openLink({
-					url : Util.getTargetUrl('leavebalance', 'add/')+taskType
+					url : Util.getTargetUrl('tm/leavebalance', 'add/')+taskType
 				});
 				return;
 
