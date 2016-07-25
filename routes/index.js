@@ -27,6 +27,8 @@ router.get('/', function (req, res, next) {
 });
 //返回增加记录页面
 router.get('/add/:typeid', function (req, res, next) {
+	if (req.session.user === undefined)
+		res.redirect(req.protocol+'://'+req.headers.host);
 	console.log(req.params.typeid);
 	if (req.params.typeid == 1)
 		res.render('addvacation', {});

@@ -17,6 +17,12 @@
 			$('body').trigger('navigation.rightButton.change', [{
 						"text" : "保存",
 						"callback" : function () {
+							dd.device.notification.showPreloader({
+								text : "使劲加载中..", //loading显示的字符，空表示不显示文字
+								showIcon : true, //是否显示icon，默认true
+								onSuccess : function (result) {},
+								onFail : function (err) {}
+							});
 							var obj = {};
 							obj.taskId =  + (new Date());
 							obj.attTypeID = $('#attTypeid').val();
@@ -96,18 +102,38 @@
 								url : '/tm/vacationadding',
 								type : 'post',
 								data : obj,
-								//timeout : 5000,
+								timeout : 5000,
 								success : function (data) {
-									alert("first" + JSON.stringify(data));
-									if (data.result==true) {
-										dd.biz.navigation.close();
-									} else { //dd.biz.navigation.close();
-										window.location.href = 'http://192.168.31.105:3000';
-										alert('second' + data);
+									dd.device.notification.hidePreloader({
+										onSuccess : function (result) {
+										},
+										onFail : function (err) {}
+									});
+									dd.device.notification.toast({
+										icon : 'success', //icon样式，有success和error，默认为空 0.0.2
+										text : '申请成功', //提示信息
+										duration : 2, //显示持续时间，单位秒，默认按系统规范[android只有两种(<=2s >2s)]
+										delay : 0, //延迟显示，单位秒，默认0
+										onSuccess : function (result) {
+											setTimeout('dd.biz.navigation.close()',2000);
+										},
+										onFail : function (err) {}
+									})
+									var homepage = window.location.protocol + '//' + window.location.host;
+									//alert(homepage);
+									if (data.result == true) {}
+									else {
+										window.location = homepage;
+										//dd.biz.navigation.close();
 									}
-
 								},
 								error : function (xhr, errorType, error) {
+									dd.device.notification.hidePreloader({
+										onSuccess : function (result) {
+											/*{}*/
+										},
+										onFail : function (err) {}
+									});
 									alert('ajaxfailed' + errorType + error)
 								}
 							})

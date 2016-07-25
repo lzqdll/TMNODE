@@ -1,17 +1,16 @@
 ;
 (function () {
-	logger.i('Here we go...  反对法');
-
+	logger.i('Here we go...');
 	logger.i(location.href);
 	/**
 	 * _config comes from server-side template. see views/index.jade
 	 */
 	_config = JSON.parse(mss);
-	logger.i(_config.agentId);
+/* 	logger.i(_config.agentId);
 	logger.i(_config.corpId);
 	logger.i(_config.timeStamp);
 	logger.i(_config.nonceStr);
-	logger.i(_config.signature);
+	logger.i(_config.signature); */
 	dd.config({
 		agentId : _config.agentId,
 		corpId : _config.corpId,
@@ -50,23 +49,27 @@
 		dd.runtime.permission.requestAuthCode({
 			corpId : _config.corpId, //企业id
 			onSuccess : function (info) {
-				var code=info.code;
-				logger.i('authcode: ' +code);
+				var code = info.code;
+				//logger.i('authcode: ' + code);
 				$.ajax({
 					url : '/users/ssoauth',
 					type : "GET",
-					data:{'code' : code},
+					data : {
+						'code' : code
+					},
 					dataType : 'json',
-					//timeout : 5000,
+					timeout : 5000,
 					success : function (data, status, xhr) {
-						logger.i(JSON.stringify(data));
-						if(data.result)
-						{window.location.href = 'http://192.168.31.105:3000/tm/leavebalance?dd_nav_bgcolor=FF5E97F6';}
-					else
-						logger.i('身份验证失败');
+						if (data.result) {
+							logger.i('SSO success' + JSON.stringify(data));
+							window.location.replace(window.location + 'tm/leavebalance?dd_nav_bgcolor=FF5E97F6');
+							//window.location = window.location + 'tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
+							//dd.biz.navigation.close();
+						} else
+							logger.i('SSO fail');
 					},
 					error : function (xhr, errorType, error) {
-						logger.e("ajax failed：" + errorType + ', requestauthcode ' + error+','+JSON.stringify(xhr));
+						logger.e("ajax failed：" + errorType + ', requestauthcode ' + error + ',' + JSON.stringify(xhr));
 					}
 				});
 			},

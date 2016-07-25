@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var url = require("url");
-var tm = require('../node_modules/tm/tmdataexchange.js')
-	//var mysql1=require('../mysql.js')
-	/* GET home page. */
+var tm = require('../node_modules/tm/tmdataexchange.js');
+//var mysql1=require('../mysql.js')
+/* GET home page. */
 
-	//直接登陆TM返回登陆页面
-	router.get('/', function (req, res, next) {
-		res.render('login', {
-			title : url.parse(req.url).pathname
-		});
+//直接登陆TM返回登陆页面
+router.get('/', function (req, res, next) {
+	res.render('login', {
+		title : url.parse(req.url).pathname
 	});
+});
 //返回首页数据
 router.get('/leavebalance', function (req, res, next) {
 	tm.getleavebalance(req.session.user, null, {
@@ -32,7 +32,9 @@ router.post('/vacationadding', function (req, res, next) {
 		tm.vacationAdding(req.session.user, req.body, {
 			success : function (result) {
 				console.log(result);
-				res.send(result.success);
+				res.send({
+					'result' : result.success
+				});
 			},
 			error : function (result) {}
 		});
