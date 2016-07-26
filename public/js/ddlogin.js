@@ -5,12 +5,14 @@
 	/**
 	 * _config comes from server-side template. see views/index.jade
 	 */
+	
 	_config = JSON.parse(mss);
-/* 	logger.i(_config.agentId);
+	logger.i(_config.agentId);
 	logger.i(_config.corpId);
-	logger.i(_config.timeStamp);
+	/* logger.i(_config.timeStamp);
 	logger.i(_config.nonceStr);
 	logger.i(_config.signature); */
+	alert('DD'+dd);
 	dd.config({
 		agentId : _config.agentId,
 		corpId : _config.corpId,
@@ -31,7 +33,7 @@
 			'biz.telephone.call',
 			'biz.ding.post']
 	});
-
+	
 	dd.userid = 0;
 	//alert("obj   "+_config);
 	dd.ready(function () {

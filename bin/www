@@ -43,7 +43,8 @@ var httpsserver = https.createServer(options, app).listen(3011, function () {
 /**
  * Normalize a port into a number, string, or false.
  */
-
+httpsserver.on('error', onError);
+httpsserver.on('listening', onListening);
 function normalizePort(val) {
 	var port = parseInt(val, 10);
 
