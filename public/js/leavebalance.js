@@ -20,9 +20,9 @@
 		getTargetUrl : function (replaceUrl, targetUrl) {
 			var protocol = location.protocol;
 			var host = location.host;
-			alert(location.pathname);
+			//alert(location.pathname);
 			var pathname = location.pathname.replace(replaceUrl, targetUrl);
-			alert(pathname);
+			//alert(pathname);
 			return protocol + '//' + host + pathname;
 		}
 	};
