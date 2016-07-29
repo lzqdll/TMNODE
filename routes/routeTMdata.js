@@ -26,10 +26,10 @@ router.get('/leavebalance', function (req, res, next) {
 	})
 });
 //处理增加记录请求
-router.post('/vacationadding', function (req, res, next) {
+router.post('/applicationadding', function (req, res, next) {
 	console.log(req.body);
 	if (req.session.user !== undefined)
-		tm.vacationAdding(req.session.user, req.body, {
+		tm.applicationAdding(req.session.user, req.body, {
 			success : function (result) {
 				console.log(result);
 				res.send({

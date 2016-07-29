@@ -98,8 +98,9 @@
 								return;
 							}
 							obj.oper = 'add';
+							obj.appType='VACATION';
 							$.ajax({
-								url : '/tm/vacationadding',
+								url : '/tm/applicationadding',
 								type : 'post',
 								data : obj,
 								timeout : 5000,

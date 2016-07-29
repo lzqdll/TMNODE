@@ -63,7 +63,7 @@
 					timeout : 5000,
 					success : function (data, status, xhr) {
 						if (data.result) {
-							logger.i('SSO success' + JSON.stringify(data));
+							logger.i('SSO success');
 							window.location.replace(window.location + 'tm/leavebalance?dd_nav_bgcolor=FF5E97F6');
 							//window.location = window.location + 'tm/leavebalance?dd_nav_bgcolor=FF5E97F6';
 							//dd.biz.navigation.close();

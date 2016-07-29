@@ -98,31 +98,32 @@
 								return;
 							}
 							obj.oper = 'add';
+							obj.appType = 'OT';
 							$.ajax({
-								url : '/tm/OTdding',
+								url : '/tm/applicationadding',
 								type : 'post',
 								data : obj,
 								timeout : 5000,
 								success : function (data) {
 									dd.device.notification.hidePreloader({
-										onSuccess : function (result) {
-										},
+										onSuccess : function (result) {},
 										onFail : function (err) {}
 									});
-									dd.device.notification.toast({
-										icon : 'success', //icon样式，有success和error，默认为空 0.0.2
-										text : '申请成功', //提示信息
-										duration : 2, //显示持续时间，单位秒，默认按系统规范[android只有两种(<=2s >2s)]
-										delay : 0, //延迟显示，单位秒，默认0
-										onSuccess : function (result) {
-											setTimeout('dd.biz.navigation.close()',2000);
-										},
-										onFail : function (err) {}
-									})
-									var homepage = window.location.protocol + '//' + window.location.host;
+
 									//alert(homepage);
-									if (data.result == true) {}
-									else {
+									if (data.result == true) {
+										dd.device.notification.toast({
+											icon : 'success', //icon样式，有success和error，默认为空 0.0.2
+											text : '申请成功', //提示信息
+											duration : 2, //显示持续时间，单位秒，默认按系统规范[android只有两种(<=2s >2s)]
+											delay : 0, //延迟显示，单位秒，默认0
+											onSuccess : function (result) {
+												setTimeout('dd.biz.navigation.close()', 2000);
+											},
+											onFail : function (err) {}
+										})
+									} else {
+										var homepage = window.location.protocol + '//' + window.location.host;
 										window.location = homepage;
 										//dd.biz.navigation.close();
 									}
@@ -183,10 +184,10 @@
 				dd.biz.util.chosen({
 					source : [{
 							key : '倒休', //显示文本
-							value : 1
+							value : 3
 						}, {
 							key : '付费',
-							value : 2
+							value : 4
 						}
 					],
 					selectedKey : v,

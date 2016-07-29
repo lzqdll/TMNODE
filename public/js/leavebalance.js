@@ -44,7 +44,7 @@
 						"text" : "新增",
 						"show" : true,
 						"callback" : function (data) {
-							 alert(data.id);
+							 //alert(data.id);
 							that.go('add','',data.id);
 						}
 					}
