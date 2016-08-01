@@ -27,7 +27,7 @@ router.get('/leavebalance', function (req, res, next) {
 });
 //处理增加记录请求
 router.post('/applicationadding', function (req, res, next) {
-	console.log(req.body);
+	console.log('jfajsdfj'+req.body);
 	if (req.session.user !== undefined)
 		tm.applicationAdding(req.session.user, req.body, {
 			success : function (result) {
